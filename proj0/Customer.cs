@@ -2,6 +2,9 @@
 
 namespace proj0
 {
+  /// <summary>
+  /// This is the customer class
+  /// </summary>
   public class Customer
   {
     private String fname;

@@ -13,6 +13,8 @@ namespace proj0
     private Dictionary<String, Customer> _customers = new Dictionary<string, Customer>();
     private Dictionary<String, Store> stores = new Dictionary<string, Store>();
 
+    private Order currentOrder = new Order();
+
     private void DisplayOrderDetails()
     {
 

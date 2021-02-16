@@ -10,7 +10,7 @@ namespace proj0
   {
     private ConsoleOutput co = new ConsoleOutput();
     private ConsoleInput ci = new ConsoleInput();
-    private Dictionary<String, Customer> customers = new Dictionary<string, Customer>();
+    private Dictionary<String, Customer> _customers = new Dictionary<string, Customer>();
     private Dictionary<String, Store> stores = new Dictionary<string, Store>();
 
     private void DisplayOrderDetails()
@@ -63,12 +63,11 @@ namespace proj0
             break;
           case (int)storeAppChoices.AddCusomer:
             Console.WriteLine("Add Customer");
-            AddCusomer();
-
+            AddCustomer();
             break;
           case (int)storeAppChoices.SearchCustomer:
-            Console.WriteLine("Order placed");
-            // placeorder
+            Console.WriteLine("Search Customer");
+            SearchCustomer();
             break;
           case (int)storeAppChoices.OrderDetailDisplay:
             Console.WriteLine("Order placed");
@@ -105,9 +104,28 @@ namespace proj0
 
     }
 
-    private void AddCusomer()
+    private void AddCustomer()
     {
-      customers.Add(ci.StringResponceToPrompt("Enter Customer ID"), new Customer(ci.StringResponceToPrompt("Enter first name"), ci.StringResponceToPrompt("Enter last name")));
+      // _customers.Add(ci.StringResponceToPrompt("Enter Customer ID"), new Customer(ci.StringResponceToPrompt("Enter first name"), ci.StringResponceToPrompt("Enter last name")));
+      _customers.Add(ci.StringResponceToPrompt("Enter Customer ID"), new Customer(ci.StringResponceToPrompt("Enter name")));
+    }
+
+    private Customer SearchCustomer()
+    {
+
+
+      if (_customers.TryGetValue(ci.StringResponceToPrompt("Search customer by name"), out Customer foundCustomer))
+      {
+        // Console.WriteLine($"Found customer: {foundCustomer.FirstName} {foundCustomer.LastName}");
+        Console.WriteLine($"Found customer: {foundCustomer.Name} ");
+        Console.WriteLine($"YEAH!!!!");
+        return foundCustomer;
+      }
+      else
+      {
+        co.Print2Screen("Customer not found");
+        return null;
+      }
     }
   }
 }

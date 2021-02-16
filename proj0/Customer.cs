@@ -7,31 +7,44 @@ namespace proj0
   /// </summary>
   public class Customer
   {
-    private String fname;
-    private String lname;
+
+    private String name;
+    // private String fname;
+    // private String lname;
 
     public Customer()
     {
-      this.fname = "John";
-      this.lname = "Doe";
+      this.name = "John";
+      // this.fname = "John";
+      // this.lname = "Doe";
     }
 
-    public Customer(String fname, String lname)
+    // public Customer(String fname, String lname)
+    // {
+    //   this.fname = fname;
+    //   this.lname = lname;
+    // }
+    public Customer(String name)
     {
-      this.fname = fname;
-      this.lname = lname;
+      this.name = name;
     }
 
-    public String FirstName
-    {
-      get => this.fname;
-      set => fname = value;
-    }
+    // public String FirstName
+    // {
+    //   get => this.fname;
+    //   set => fname = value;
+    // }
 
-    public String LastName
+    // public String LastName
+    // {
+    //   get => this.lname;
+    //   set => lname = value;
+    // }
+
+    public String Name
     {
-      get => this.lname;
-      set => lname = value;
+      get => this.name;
+      set => name = value;
     }
 
     public void PlaceOrder()

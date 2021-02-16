@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
-
 namespace proj0
 {
   public class Store
   {
-    private String _storeID;
-    private Dictionary<String, Item> inventory;
-
     private ConsoleOutput co = new ConsoleOutput();
     private ConsoleInput ci = new ConsoleInput();
 
-
+    private String _storeID;
+    private Dictionary<String, Item> inventory;
+    private Dictionary<DateTime, Order> _storeOrderHistory;
 
     public Store(String id)
     {
@@ -38,6 +36,11 @@ namespace proj0
       {
         Console.WriteLine($"{kvp.Value}");
       }
+    }
+
+    public bool isOutrageousAmount(int amount)
+    {
+      return false;
     }
   }
 }

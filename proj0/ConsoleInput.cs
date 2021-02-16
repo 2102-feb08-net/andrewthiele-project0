@@ -38,6 +38,12 @@ namespace proj0
 
       return ReturnInteger();
     }
+
+    public String StringResponceToPrompt(String prompt)
+    {
+      Console.WriteLine(prompt);
+      return Console.ReadLine();
+    }
   }
 
 }

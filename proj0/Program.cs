@@ -6,8 +6,11 @@
     {
       ConsoleOutput cs = new ConsoleOutput();
       cs.Print2Screen("Store Application");
-      StoreApplication sa = new StoreApplication();
-      sa.RunStoreApplication();
+
+
+      var storeApp = new StoreApplication();
+      storeApp.Start();
+
     }
   }
 }

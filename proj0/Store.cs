@@ -1,22 +1,43 @@
 ﻿using System;
+using System.Collections.Generic;
+
 
 namespace proj0
 {
-    public class Store
+  public class Store
+  {
+    private String _storeID;
+    private Dictionary<String, Item> inventory;
+
+    private ConsoleOutput co = new ConsoleOutput();
+    private ConsoleInput ci = new ConsoleInput();
+
+
+
+    public Store(String id)
     {
-        public Store()
-        {
-            Console.WriteLine("You watch the store");
-        }
-
-        public void loadStoreData(String data)
-        {
-
-        }
-
-        public bool isOutrageousAmount(int amount)
-        {
-            return false;
-        }
+      Console.WriteLine("You watch the store");
+      this._storeID = id;
+      inventory = new Dictionary<string, Item>();
     }
+
+    public void LoadStoreData(String data)
+    {
+
+    }
+
+    public bool IsOutrageousAmount(int amount)
+    {
+      return false;
+    }
+
+    public void PrintOutInventory()
+    {
+      Console.WriteLine($"Store {_storeID} Inventory is: ");
+      foreach (KeyValuePair<string, Item> kvp in inventory)
+      {
+        Console.WriteLine($"{kvp.Value}");
+      }
+    }
+  }
 }

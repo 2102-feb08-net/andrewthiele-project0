@@ -4,10 +4,10 @@
   {
     static void Main(string[] args)
     {
-      var customer = new Customer();
-            var CI = new ConsoleInput();
-            var CO = new ConsoleOutput();
-            CO.Print2Screen(CI.RespondToPrompt("Type in an integer: "));
+      ConsoleOutput cs = new ConsoleOutput();
+      cs.Print2Screen("Store Application");
+      StoreApplication sa = new StoreApplication();
+      sa.RunStoreApplication();
     }
   }
 }

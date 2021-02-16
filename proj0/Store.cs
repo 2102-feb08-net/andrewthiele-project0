@@ -2,16 +2,21 @@
 
 namespace proj0
 {
-  public class Store
-  {
-    public Store()
+    public class Store
     {
-      Console.WriteLine("You watch the store");
-    }
+        public Store()
+        {
+            Console.WriteLine("You watch the store");
+        }
 
-    public void loadStoreData(String data)
-    {
+        public void loadStoreData(String data)
+        {
 
+        }
+
+        public bool isOutrageousAmount(int amount)
+        {
+            return false;
+        }
     }
-  }
 }

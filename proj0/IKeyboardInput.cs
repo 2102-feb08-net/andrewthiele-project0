@@ -1,10 +1,14 @@
 ﻿using System;
-
-public interface IKeyboardInput
+namespace proj0
 {
-	public int RespondToPrompt(String message)
-    {}
+    interface IKeyboardInput
+    {
+        int RespondToPrompt(String message);
 
-    public int ChooseFrom(String[] menu)
-    {}
+        int ReturnInteger();
+
+        int ChooseFrom(String[] menu);
+      
+    }
+
 }

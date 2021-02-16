@@ -1,6 +1,10 @@
 ﻿using System;
 
-interface IScreenOutput
+namespace proj0
 {
-	public void Print2Scrren(Sting output);
+    interface IScreenOutput
+    {
+        void Print2Screen(String output);
+        void Print2Screen(int number);
+    }
 }

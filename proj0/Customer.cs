@@ -8,48 +8,31 @@ namespace proj0
   public class Customer
   {
 
-    private String name;
-    // private String fname;
-    // private String lname;
+    private String fname;
+    private String lname;
 
     public Customer()
     {
-      this.name = "John";
-      // this.fname = "John";
-      // this.lname = "Doe";
+      this.fname = "John";
+      this.lname = "Doe";
     }
 
-    // public Customer(String fname, String lname)
-    // {
-    //   this.fname = fname;
-    //   this.lname = lname;
-    // }
-    public Customer(String name)
+    public Customer(String fname, String lname)
     {
-      this.name = name;
+      this.fname = fname;
+      this.lname = lname;
     }
 
-    // public String FirstName
-    // {
-    //   get => this.fname;
-    //   set => fname = value;
-    // }
-
-    // public String LastName
-    // {
-    //   get => this.lname;
-    //   set => lname = value;
-    // }
-
-    public String Name
+    public String FirstName
     {
-      get => this.name;
-      set => name = value;
+      get => this.fname;
+      set => fname = value;
     }
 
-    public void PlaceOrder()
+    public String LastName
     {
-      return;
+      get => this.lname;
+      set => lname = value;
     }
 
     public bool IsPrime(int candidate)

@@ -13,8 +13,7 @@ namespace XUnitTestProject0
     //[InlineData(2)]
     public void IsPrime_ValuesLessThan2_ReturnFalse(int value)
     {
-      // var customer = new Customer("Larry", "Jones");
-      var customer = new Customer("Larry Jones");
+      var customer = new Customer("Larry", "Jones");
       bool result = customer.IsPrime(value);
 
       Assert.False(result, $"{value} should not be prime");

@@ -69,7 +69,7 @@ namespace proj0
             break;
           case (int)storeAppChoices.SearchCustomer:
             Console.WriteLine("Search Customer");
-            SearchCustomer();
+            SearchCustomer("Search customer by name");
             break;
           case (int)storeAppChoices.OrderDetailDisplay:
             Console.WriteLine("Order placed");
@@ -108,18 +108,16 @@ namespace proj0
 
     private void AddCustomer()
     {
-      // _customers.Add(ci.StringResponceToPrompt("Enter Customer ID"), new Customer(ci.StringResponceToPrompt("Enter first name"), ci.StringResponceToPrompt("Enter last name")));
-      String CustomerName = ci.StringResponceToPrompt("Enter customer name");
-      _customers.Add(CustomerName, new Customer(CustomerName));
+      _customers.Add(ci.StringResponceToPrompt("Enter Customer ID"), new Customer(ci.StringResponceToPrompt("Enter first name"), ci.StringResponceToPrompt("Enter last name")));
     }
 
-    private Customer SearchCustomer()
+    private Customer SearchCustomer(String searchMessage)
     {
-      if (_customers.TryGetValue(ci.StringResponceToPrompt("Search customer by name"), out Customer foundCustomer))
+      if (_customers.TryGetValue(ci.StringResponceToPrompt(searchMessage), out Customer foundCustomer))
       {
-        // Console.WriteLine($"Found customer: {foundCustomer.FirstName} {foundCustomer.LastName}");
-        Console.WriteLine($"Found customer: {foundCustomer.Name} ");
-        Console.WriteLine($"YEAH!!!!");
+        Console.WriteLine($"Found customer: {foundCustomer.FirstName} {foundCustomer.LastName}");
+        // co.Print2Screen($"Found customer: {foundCustomer.Name} ");
+        co.Print2Screen($"YEAH!!!!");
         return foundCustomer;
       }
       else

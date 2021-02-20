@@ -108,7 +108,10 @@ namespace proj0
 
     private void AddCustomer()
     {
-      _customers.Add(ci.StringResponceToPrompt("Enter Customer ID"), new Customer(ci.StringResponceToPrompt("Enter first name"), ci.StringResponceToPrompt("Enter last name")));
+      String fname = ci.StringResponceToPrompt("Enter first name");
+      String lname = ci.StringResponceToPrompt("Enter last name");
+
+      _customers.Add($"{fname} {lname}", new Customer(fname, lname));
     }
 
     private Customer SearchCustomer(String searchMessage)
@@ -116,7 +119,6 @@ namespace proj0
       if (_customers.TryGetValue(ci.StringResponceToPrompt(searchMessage), out Customer foundCustomer))
       {
         Console.WriteLine($"Found customer: {foundCustomer.FirstName} {foundCustomer.LastName}");
-        // co.Print2Screen($"Found customer: {foundCustomer.Name} ");
         co.Print2Screen($"YEAH!!!!");
         return foundCustomer;
       }

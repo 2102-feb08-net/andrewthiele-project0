@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "proj0", "proj0\proj0.csproj", "{3AC6264D-38B4-465C-8CBE-B8F1C6C78D27}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "proj0", "proj0\proj0.csproj", "{3AC6264D-38B4-465C-8CBE-B8F1C6C78D27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestProject0", "XUnitTestProject0\XUnitTestProject0.csproj", "{85CAAC91-6A10-4E81-956C-5EB912AAEACB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XUnitTestProject0", "XUnitTestProject0\XUnitTestProject0.csproj", "{85CAAC91-6A10-4E81-956C-5EB912AAEACB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreApp.DbAccess", "StoreApp.DbAccess\StoreApp.DbAccess.csproj", "{BD6BD7A1-3832-4816-B436-298DAC390E3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreApplication", "StoreApplication\StoreApplication.csproj", "{7766C83E-9A3B-4C64-AFDE-C02BF8D472E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{85CAAC91-6A10-4E81-956C-5EB912AAEACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85CAAC91-6A10-4E81-956C-5EB912AAEACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85CAAC91-6A10-4E81-956C-5EB912AAEACB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD6BD7A1-3832-4816-B436-298DAC390E3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD6BD7A1-3832-4816-B436-298DAC390E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD6BD7A1-3832-4816-B436-298DAC390E3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD6BD7A1-3832-4816-B436-298DAC390E3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7766C83E-9A3B-4C64-AFDE-C02BF8D472E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7766C83E-9A3B-4C64-AFDE-C02BF8D472E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7766C83E-9A3B-4C64-AFDE-C02BF8D472E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7766C83E-9A3B-4C64-AFDE-C02BF8D472E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

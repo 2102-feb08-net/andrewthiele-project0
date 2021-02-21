@@ -1,19 +1,27 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using StoreApp.DbAccess;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using System.IO;
+
+
 
 namespace proj0
 {
   public class StoreApplication
   {
+
+    private String filelocation;
+    private String logStreamLocation;
     private ConsoleOutput co = new ConsoleOutput();
     private ConsoleInput ci = new ConsoleInput();
     private Dictionary<String, Customer> _customers = new Dictionary<string, Customer>();
     private Dictionary<String, Store> stores = new Dictionary<string, Store>();
 
     private Order currentOrder = new Order();
+
 
     private void DisplayOrderDetails()
     {
@@ -30,6 +38,20 @@ namespace proj0
 
     }
 
+    static StoreProj0Context createContext(String filelocation, String logger)
+    {
+      // using var logStream = new StreamWriter(logger, append: false) { AutoFlush = true };
+      var logStream = new StreamWriter(logger, append: false) { AutoFlush = true };
+
+      String connectionString = File.ReadAllText(filelocation);
+      DbContextOptions<StoreProj0Context> options = new DbContextOptionsBuilder<StoreProj0Context>()
+        .UseSqlServer(connectionString)
+        .LogTo(logStream.WriteLine, minimumLevel: LogLevel.Information)
+        .Options;
+
+      return new StoreProj0Context(options);
+    }
+
     private String[] storeAppOperations = { "Store App Operations", "Place order to store location for customer", "Add new customer", "Search customers by name", "Display order details", "Display store location order history", "Display customer order history", "Exit Application" };
 
     enum storeAppChoices
@@ -43,8 +65,11 @@ namespace proj0
       ExitProgram
 
     }
-    public StoreApplication()
-    { }
+    public StoreApplication(String filelocation, String logStreamLocation)
+    {
+      this.filelocation = filelocation;
+      this.logStreamLocation = logStreamLocation;
+    }
 
     /// <summary>
     /// Starts Store Application
@@ -52,7 +77,7 @@ namespace proj0
     public void Start()
     {
 
-      LoadStoreData();
+      //LoadStoreData();
       bool isStillUsingApp = true;
 
       while (isStillUsingApp)
@@ -100,9 +125,6 @@ namespace proj0
 
     private void LoadStoreData()
     {
-      stores.Add("Chicago", new Store("CHICAGO1"));
-      stores.Add("Baltimore", new Store("BALT1"));
-      stores.Add("Arrlington", new Store("UTA1"));
 
     }
 

@@ -181,7 +181,42 @@ namespace proj0
       //   return null;
       // }
 
+      Console.WriteLine("");
+      Console.WriteLine("Search for a customer");
+
       var context = createContext(_filelocation, _logStreamLocation);
+      Console.WriteLine("Context Created");
+
+      String searchedFirstName = ci.StringResponceToPrompt("Enter customer first name: ");
+      String searchedLastName = ci.StringResponceToPrompt("Enter customer last name: ");
+
+      try
+      {
+        var result = context.Customers
+              .Where(c => c.FirstName == searchedFirstName && c.LastName == searchedLastName).SingleOrDefault();
+        if (result.FirstName.Equals(searchedFirstName) && result.LastName.Equals(searchedLastName))
+        {
+          Console.WriteLine($"Customer {result.FirstName} {result.LastName} found.");
+          Console.WriteLine("WOO HOO");
+        }
+      }
+      catch (NullReferenceException)
+      {
+
+        Console.WriteLine("No Customer found");
+      }
+
+
+      // if (result.FirstName.Equals(searchedFirstName) && result.LastName.Equals(searchedLastName))
+      // {
+      //   Console.WriteLine($"Customer {result.FirstName} {result.LastName} found.");
+      //   Console.WriteLine("WOO HOO");
+      // }
+      // else
+      // {
+      //   Console.WriteLine("Customer does not exist");
+      // }
+
     }
   }
 }

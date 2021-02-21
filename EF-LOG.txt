@@ -1,0 +1,6 @@
+info: 2/20/2021 18:42:15.859 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure) 
+      Entity Framework Core 5.0.3 initialized 'StoreProj0Context' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
+info: 2/20/2021 18:42:17.713 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (167ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT [p].[productID], [p].[name], [p].[price], [p].[quantity]
+      FROM [Products] AS [p]

@@ -7,32 +7,35 @@ namespace proj0
   /// </summary>
   public class Customer
   {
+    private int _customerId;
+    private String _fname;
+    private String _lname;
 
-    private String fname;
-    private String lname;
+    private double _balance;
 
     public Customer()
     {
-      this.fname = "John";
-      this.lname = "Doe";
+
+      this._fname = "John";
+      this._lname = "Doe";
     }
 
     public Customer(String fname, String lname)
     {
-      this.fname = fname;
-      this.lname = lname;
+      this._fname = fname;
+      this._lname = lname;
     }
 
     public String FirstName
     {
-      get => this.fname;
-      set => fname = value;
+      get => this._fname;
+      set => _fname = value;
     }
 
     public String LastName
     {
-      get => this.lname;
-      set => lname = value;
+      get => this._lname;
+      set => _lname = value;
     }
 
     public bool IsPrime(int candidate)

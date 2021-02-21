@@ -13,8 +13,21 @@ namespace proj0
   public class StoreApplication
   {
 
-    private String filelocation;
-    private String logStreamLocation;
+    private String _filelocation;
+    private String _logStreamLocation;
+
+
+
+
+    public String Filelocation
+    {
+      get => _filelocation;
+    }
+
+    public String LogStreamLocation
+    {
+      get => _logStreamLocation;
+    }
     private ConsoleOutput co = new ConsoleOutput();
     private ConsoleInput ci = new ConsoleInput();
     private Dictionary<String, Customer> _customers = new Dictionary<string, Customer>();
@@ -38,15 +51,15 @@ namespace proj0
 
     }
 
-    static StoreProj0Context createContext(String filelocation, String logger)
+    private StoreProj0Context createContext(String filelocation, String logger)
     {
       // using var logStream = new StreamWriter(logger, append: false) { AutoFlush = true };
-      var logStream = new StreamWriter(logger, append: false) { AutoFlush = true };
+      //var logStream = new StreamWriter(logger, append: false) { AutoFlush = true };
 
       String connectionString = File.ReadAllText(filelocation);
       DbContextOptions<StoreProj0Context> options = new DbContextOptionsBuilder<StoreProj0Context>()
         .UseSqlServer(connectionString)
-        .LogTo(logStream.WriteLine, minimumLevel: LogLevel.Information)
+        //.LogTo(logStream.WriteLine, minimumLevel: LogLevel.Information)
         .Options;
 
       return new StoreProj0Context(options);
@@ -67,8 +80,8 @@ namespace proj0
     }
     public StoreApplication(String filelocation, String logStreamLocation)
     {
-      this.filelocation = filelocation;
-      this.logStreamLocation = logStreamLocation;
+      this._filelocation = filelocation;
+      this._logStreamLocation = logStreamLocation;
     }
 
     /// <summary>
@@ -133,22 +146,42 @@ namespace proj0
       String fname = ci.StringResponceToPrompt("Enter first name");
       String lname = ci.StringResponceToPrompt("Enter last name");
 
-      _customers.Add($"{fname} {lname}", new Customer(fname, lname));
+      // _customers.Add($"{fname} {lname}", new Customer(fname, lname));
+      var context = createContext(_filelocation, _logStreamLocation);
+
+      int max_id = context.Customers.Max(c => c.CustomerId);
+      // Console.WriteLine("Context created");
+      var newCustomer = new StoreApp.DbAccess.Customer
+      {
+        CustomerId = ++max_id,
+        FirstName = fname,
+        LastName = lname,
+        Balance = 0M
+      };
+
+      context.Customers.Add(newCustomer);
+      context.SaveChanges();
+
+      Console.WriteLine("Customer Added");
+      context.Dispose();
+
     }
 
-    private Customer SearchCustomer(String searchMessage)
+    private void SearchCustomer(String searchMessage)
     {
-      if (_customers.TryGetValue(ci.StringResponceToPrompt(searchMessage), out Customer foundCustomer))
-      {
-        Console.WriteLine($"Found customer: {foundCustomer.FirstName} {foundCustomer.LastName}");
-        co.Print2Screen($"YEAH!!!!");
-        return foundCustomer;
-      }
-      else
-      {
-        co.Print2Screen("Customer not found");
-        return null;
-      }
+      // if (_customers.TryGetValue(ci.StringResponceToPrompt(searchMessage), out Customer foundCustomer))
+      // {
+      //   Console.WriteLine($"Found customer: {foundCustomer.FirstName} {foundCustomer.LastName}");
+      //   co.Print2Screen($"YEAH!!!!");
+      //   return foundCustomer;
+      // }
+      // else
+      // {
+      //   co.Print2Screen("Customer not found");
+      //   return null;
+      // }
+
+      var context = createContext(_filelocation, _logStreamLocation);
     }
   }
 }

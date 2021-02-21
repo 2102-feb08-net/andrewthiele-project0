@@ -1,6 +1,14 @@
-info: 2/20/2021 18:42:15.859 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure) 
+info: 2/20/2021 22:41:57.083 CoreEventId.ContextInitialized[10403] (Microsoft.EntityFrameworkCore.Infrastructure) 
       Entity Framework Core 5.0.3 initialized 'StoreProj0Context' using provider 'Microsoft.EntityFrameworkCore.SqlServer' with options: None
-info: 2/20/2021 18:42:17.713 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
-      Executed DbCommand (167ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
-      SELECT [p].[productID], [p].[name], [p].[price], [p].[quantity]
-      FROM [Products] AS [p]
+info: 2/20/2021 22:41:58.122 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (80ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT MAX([c].[customerID])
+      FROM [Customers] AS [c]
+info: 2/20/2021 22:41:58.412 RelationalEventId.CommandExecuted[20101] (Microsoft.EntityFrameworkCore.Database.Command) 
+      Executed DbCommand (99ms) [Parameters=[@p0='?' (DbType = Int32), @p1='?' (Size = 100), @p2='?' (Size = 100)], CommandType='Text', CommandTimeout='30']
+      SET NOCOUNT ON;
+      INSERT INTO [Customers] ([customerID], [firstName], [lastName])
+      VALUES (@p0, @p1, @p2);
+      SELECT [balance]
+      FROM [Customers]
+      WHERE @@ROWCOUNT = 1 AND [customerID] = @p0;

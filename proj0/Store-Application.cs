@@ -95,6 +95,7 @@ namespace proj0
             break;
           case (int)storeAppChoices.OrderDetailDisplay:
             Console.WriteLine("Search Orders");
+            DisplayInvoiceDetails();
             // placeorder
             break;
           case (int)storeAppChoices.StoreOrderHistoryDisplay:
@@ -278,10 +279,45 @@ namespace proj0
 
     }
 
-    private void DisplayOrderDetails()
+    private void DisplayInvoiceDetails()
     {
-      Console.WriteLine("I am totally showing the store order history");
+      Console.WriteLine("I am totally showing the order details");
       var context = createContext(_filelocation, _logStreamLocation);
+
+      int invoiceNumber = ci.RespondToPrompt("Enter Order Number");
+      // Invoices contain multiple orders
+      try
+      {
+        var result = context.Invoices
+              .Where(i => i.InvoiceId == invoiceNumber).SingleOrDefault();
+        if (result.InvoiceId == invoiceNumber)
+        {
+          var invoiceDetails = context.Orders
+          .Include(o => o.Product)
+          .Include(o => o.Invoice)
+          .ThenInclude(i => i.Customer)
+          .Include(o => o.Invoice)
+          .ThenInclude(i => i.Location)
+          .Where(o => o.InvoiceId == invoiceNumber)
+          .ToList();
+
+
+          Console.WriteLine($"Order details for Order ID: {result.InvoiceId}");
+
+          Console.WriteLine($"******************************");
+          Console.WriteLine($"Customer: {result.Customer.FirstName} {result.Customer.LastName}");
+          Console.WriteLine($"Store code: {result.Location.Nickname}");
+          foreach (var product in invoiceDetails)
+          {
+            Console.WriteLine($"Product: {product.Product.Name} Quantity: {product.Quantity} Unit Price: {product.Product.Price}");
+          }
+          Console.WriteLine($"******************************");
+        }
+      }
+      catch (NullReferenceException)
+      {
+        Console.WriteLine("Order not found");
+      }
     }
   }
 }

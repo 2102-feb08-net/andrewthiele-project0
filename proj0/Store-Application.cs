@@ -101,19 +101,19 @@ namespace proj0
             AddCustomer();
             break;
           case (int)storeAppChoices.SearchCustomer:
-            Console.WriteLine("Search Customer");
+            Console.WriteLine("Search Customers");
             SearchCustomer();
             break;
           case (int)storeAppChoices.OrderDetailDisplay:
-            Console.WriteLine("Order placed");
+            Console.WriteLine("Search Orders");
             // placeorder
             break;
           case (int)storeAppChoices.StoreOrderHistoryDisplay:
-            Console.WriteLine("Order placed");
-            // placeorder
+            Console.WriteLine("Store Order Histroy ...");
+            DisplayCustomerStoreHistory();
             break;
           case (int)storeAppChoices.CustomerOrderHistroyDisplay:
-            Console.WriteLine("Customer Order History Selected");
+            Console.WriteLine("Customer Order History ...");
             DisplayCustomerOrderHistory();
             break;
           case (int)storeAppChoices.ExitProgram:
@@ -232,8 +232,52 @@ namespace proj0
       {
         Console.WriteLine("No Customer found");
       }
+    }
+    private void DisplayCustomerStoreHistory()
+    {
+      Console.WriteLine("I am totally showing the store order history");
+      var context = createContext(_filelocation, _logStreamLocation);
+      // Console.WriteLine("Context Created");
 
+      String locationIdIs = ci.StringResponceToPrompt("Enter location code: ");
 
+      try
+      {
+        var result = context.Locations
+              .Where(l => l.LocationId.ToString() == locationIdIs).SingleOrDefault();
+        if (result.LocationId.Equals(locationIdIs))
+        {
+          var orderHistory = context.Orders
+          .Include(o => o.Product)
+          .Include(o => o.Invoice)
+            .ThenInclude(i => i.Location)
+          .Include(o => o.Invoice)
+            .ThenInclude(i => i.Customer)
+          .Where(o => (o.Invoice.LocationId.ToString() == locationIdIs))
+          .OrderBy(o => o.Invoice.TimeOfOrder)
+          .ToList();
+
+          Console.WriteLine($"Order history for Location ID: {result.Nickname}");
+          Console.WriteLine($"Address : {result.Address1}");
+          Console.WriteLine($"Address : {result.Address2}");
+          Console.WriteLine($"City : {result.City}");
+          Console.WriteLine($"State : {result.State}");
+
+          foreach (var order in orderHistory)
+          {
+            Console.WriteLine($"******************************");
+            Console.WriteLine($"Invoice ID: {order.InvoiceId}");
+            Console.WriteLine($"Order ID: {order.OrderId}");
+            Console.WriteLine($"Product: {order.Product.Name}");
+            Console.WriteLine($"From Customer: {order.Invoice.Customer.FirstName} {order.Invoice.Customer.LastName}");
+            Console.WriteLine($"******************************");
+          }
+        }
+      }
+      catch (NullReferenceException)
+      {
+        Console.WriteLine("No Store found");
+      }
 
     }
   }

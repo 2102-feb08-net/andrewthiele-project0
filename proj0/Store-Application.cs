@@ -110,7 +110,7 @@ namespace proj0
             break;
           case (int)storeAppChoices.StoreOrderHistoryDisplay:
             Console.WriteLine("Store Order Histroy ...");
-            DisplayCustomerStoreHistory();
+            DisplayStoreOrderHistory();
             break;
           case (int)storeAppChoices.CustomerOrderHistroyDisplay:
             Console.WriteLine("Customer Order History ...");
@@ -233,19 +233,19 @@ namespace proj0
         Console.WriteLine("No Customer found");
       }
     }
-    private void DisplayCustomerStoreHistory()
+    private void DisplayStoreOrderHistory()
     {
       Console.WriteLine("I am totally showing the store order history");
       var context = createContext(_filelocation, _logStreamLocation);
       // Console.WriteLine("Context Created");
 
-      String locationIdIs = ci.StringResponceToPrompt("Enter location code: ");
+      String locationCode = ci.StringResponceToPrompt("Enter location code: ");
 
       try
       {
         var result = context.Locations
-              .Where(l => l.LocationId.ToString() == locationIdIs).SingleOrDefault();
-        if (result.LocationId.Equals(locationIdIs))
+              .Where(l => l.Nickname == locationCode).SingleOrDefault();
+        if (result.Nickname.Equals(locationCode))
         {
           var orderHistory = context.Orders
           .Include(o => o.Product)
@@ -253,7 +253,7 @@ namespace proj0
             .ThenInclude(i => i.Location)
           .Include(o => o.Invoice)
             .ThenInclude(i => i.Customer)
-          .Where(o => (o.Invoice.LocationId.ToString() == locationIdIs))
+          .Where(o => (o.Invoice.Location.Nickname == locationCode))
           .OrderBy(o => o.Invoice.TimeOfOrder)
           .ToList();
 

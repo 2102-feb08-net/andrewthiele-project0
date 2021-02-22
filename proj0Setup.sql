@@ -88,3 +88,30 @@ INSERT INTO Orders(orderID, invoiceID, productID, quantity) VALUES
 (3,1,3,3),
 (4,4,4,4),
 (5,5,4,5)
+
+SELECT * 
+FROM Locations l;
+SELECT *
+FROM Customers c;
+SELECT *
+FROM Invoices;
+SELECT *
+FROM Orders;
+SELECT *
+FROM Products;
+
+SELECT * 
+FROM Locations l
+INNER JOIN Invoices i On i.LocationID = l.locationID
+INNER Join Orders o ON o.invoiceID = i.InvoiceID
+WHERE nickname = 'KC1'
+ORDER BY l.locationID DESC
+
+SELECT * 
+FROM Customers c
+INNER JOIN Invoices i ON i.CustomerID = c.customerID
+INNER JOIN Orders o ON o.invoiceID = i.InvoiceID
+INNER JOIN Products p ON p.productID = o.productID
+WHERE c.firstName = 'Bob' AND c.lastName = 'Smith'
+ORDER BY c.firstName
+

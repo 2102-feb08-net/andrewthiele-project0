@@ -207,7 +207,9 @@ namespace proj0
             .ThenInclude(i => i.Customer)
           .Include(o => o.Invoice)
             .ThenInclude(i => i.Location)
-          .Where(o => (o.Invoice.Customer.FirstName == searchedFirstName && o.Invoice.Customer.LastName == searchedLastName)).ToList();
+          .Where(o => (o.Invoice.Customer.FirstName == searchedFirstName && o.Invoice.Customer.LastName == searchedLastName))
+          .OrderBy(o => o.Invoice.TimeOfOrder)
+          .ToList();
 
 
           Console.WriteLine($"{result.FirstName} {result.LastName} has ordered: ");
@@ -224,11 +226,6 @@ namespace proj0
             Console.WriteLine($"State: {order.Invoice.Location.State}");
             Console.WriteLine($"******************************");
           }
-
-
-
-
-
         }
       }
       catch (NullReferenceException)

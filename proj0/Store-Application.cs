@@ -46,11 +46,6 @@ namespace proj0
 
     }
 
-    private void DisplayCustomerOrderHistory()
-    {
-
-    }
-
     private StoreProj0Context createContext(String filelocation, String logger)
     {
       // using var logStream = new StreamWriter(logger, append: false) { AutoFlush = true };
@@ -107,7 +102,7 @@ namespace proj0
             break;
           case (int)storeAppChoices.SearchCustomer:
             Console.WriteLine("Search Customer");
-            SearchCustomer("Search customer by name");
+            SearchCustomer();
             break;
           case (int)storeAppChoices.OrderDetailDisplay:
             Console.WriteLine("Order placed");
@@ -118,8 +113,8 @@ namespace proj0
             // placeorder
             break;
           case (int)storeAppChoices.CustomerOrderHistroyDisplay:
-            Console.WriteLine("Order placed");
-            // placeorder
+            Console.WriteLine("Customer Order History Selected");
+            DisplayCustomerOrderHistory();
             break;
           case (int)storeAppChoices.ExitProgram:
             Console.WriteLine("Exiting ...");
@@ -136,17 +131,11 @@ namespace proj0
       co.Print2Screen("Application Exited");
     }
 
-    private void LoadStoreData()
-    {
-
-    }
-
     private void AddCustomer()
     {
       String fname = ci.StringResponceToPrompt("Enter first name");
       String lname = ci.StringResponceToPrompt("Enter last name");
 
-      // _customers.Add($"{fname} {lname}", new Customer(fname, lname));
       var context = createContext(_filelocation, _logStreamLocation);
 
       int max_id = context.Customers.Max(c => c.CustomerId);
@@ -167,25 +156,10 @@ namespace proj0
 
     }
 
-    private void SearchCustomer(String searchMessage)
+    private void SearchCustomer()
     {
-      // if (_customers.TryGetValue(ci.StringResponceToPrompt(searchMessage), out Customer foundCustomer))
-      // {
-      //   Console.WriteLine($"Found customer: {foundCustomer.FirstName} {foundCustomer.LastName}");
-      //   co.Print2Screen($"YEAH!!!!");
-      //   return foundCustomer;
-      // }
-      // else
-      // {
-      //   co.Print2Screen("Customer not found");
-      //   return null;
-      // }
-
-      Console.WriteLine("");
-      Console.WriteLine("Search for a customer");
-
       var context = createContext(_filelocation, _logStreamLocation);
-      Console.WriteLine("Context Created");
+      // Console.WriteLine("Context Created");
 
       String searchedFirstName = ci.StringResponceToPrompt("Enter customer first name: ");
       String searchedLastName = ci.StringResponceToPrompt("Enter customer last name: ");
@@ -196,26 +170,73 @@ namespace proj0
               .Where(c => c.FirstName == searchedFirstName && c.LastName == searchedLastName).SingleOrDefault();
         if (result.FirstName.Equals(searchedFirstName) && result.LastName.Equals(searchedLastName))
         {
-          Console.WriteLine($"Customer {result.FirstName} {result.LastName} found.");
-          Console.WriteLine("WOO HOO");
+          decimal balance = Math.Truncate(result.Balance * 100) / 100;
+
+          string s = string.Format(balance.ToString(), "{0:0.00}%");
+          Console.WriteLine($"Customer {result.FirstName} {result.LastName} found with a balance of {s}");
+          // Console.WriteLine("WOO HOO");
         }
       }
       catch (NullReferenceException)
       {
+        Console.WriteLine("No Customer found");
+      }
 
+    }
+
+    private void DisplayCustomerOrderHistory()
+    {
+      Console.WriteLine("I am totally showing the customer order history");
+      var context = createContext(_filelocation, _logStreamLocation);
+      // Console.WriteLine("Context Created");
+
+      String searchedFirstName = ci.StringResponceToPrompt("Enter customer first name: ");
+      String searchedLastName = ci.StringResponceToPrompt("Enter customer last name: ");
+
+      try
+      {
+        var result = context.Customers
+              .Where(c => c.FirstName == searchedFirstName && c.LastName == searchedLastName).SingleOrDefault();
+        if (result.FirstName.Equals(searchedFirstName) && result.LastName.Equals(searchedLastName))
+        {
+
+          Console.WriteLine($"Order history for {result.FirstName} {result.LastName}");
+          var orderHistory = context.Orders
+          .Include(o => o.Product)
+          .Include(o => o.Invoice)
+            .ThenInclude(i => i.Customer)
+          .Include(o => o.Invoice)
+            .ThenInclude(i => i.Location)
+          .Where(o => (o.Invoice.Customer.FirstName == searchedFirstName && o.Invoice.Customer.LastName == searchedLastName)).ToList();
+
+
+          Console.WriteLine($"{result.FirstName} {result.LastName} has ordered: ");
+
+          foreach (var order in orderHistory)
+          {
+            Console.WriteLine($"******************************");
+            Console.WriteLine($"Invoice ID: {order.InvoiceId}");
+            Console.WriteLine($"Order ID: {order.OrderId}");
+            Console.WriteLine($"Product: {order.Product.Name}");
+            Console.WriteLine($"From Location: {order.Invoice.Location.Address1}");
+            Console.WriteLine($"              {order.Invoice.Location.Address2}");
+            Console.WriteLine($"City: {order.Invoice.Location.City}");
+            Console.WriteLine($"State: {order.Invoice.Location.State}");
+            Console.WriteLine($"******************************");
+          }
+
+
+
+
+
+        }
+      }
+      catch (NullReferenceException)
+      {
         Console.WriteLine("No Customer found");
       }
 
 
-      // if (result.FirstName.Equals(searchedFirstName) && result.LastName.Equals(searchedLastName))
-      // {
-      //   Console.WriteLine($"Customer {result.FirstName} {result.LastName} found.");
-      //   Console.WriteLine("WOO HOO");
-      // }
-      // else
-      // {
-      //   Console.WriteLine("Customer does not exist");
-      // }
 
     }
   }

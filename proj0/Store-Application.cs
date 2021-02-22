@@ -35,17 +35,6 @@ namespace proj0
 
     private Order currentOrder = new Order();
 
-
-    private void DisplayOrderDetails()
-    {
-
-    }
-
-    private void DisplayStoreLocationHistory()
-    {
-
-    }
-
     private StoreProj0Context createContext(String filelocation, String logger)
     {
       // using var logStream = new StreamWriter(logger, append: false) { AutoFlush = true };
@@ -130,13 +119,21 @@ namespace proj0
       co.Print2Screen("");
       co.Print2Screen("Application Exited");
     }
-
+    /// <summary>
+    /// Adds customer to database
+    /// </summary>
+    /// <remarks>
+    /// Allows for duplicate customers to be added needs to be fixed
+    /// </remarks>
     private void AddCustomer()
     {
       String fname = ci.StringResponceToPrompt("Enter first name");
       String lname = ci.StringResponceToPrompt("Enter last name");
 
       var context = createContext(_filelocation, _logStreamLocation);
+
+      // check if customer already exists
+      // else add customer to database 
 
       int max_id = context.Customers.Max(c => c.CustomerId);
       // Console.WriteLine("Context created");
@@ -150,12 +147,12 @@ namespace proj0
 
       context.Customers.Add(newCustomer);
       context.SaveChanges();
-
       Console.WriteLine("Customer Added");
       context.Dispose();
-
     }
-
+    /// <summary>
+    /// Searches for customer in database
+    /// </summary>
     private void SearchCustomer()
     {
       var context = createContext(_filelocation, _logStreamLocation);
@@ -279,6 +276,12 @@ namespace proj0
         Console.WriteLine("No Store found");
       }
 
+    }
+
+    private void DisplayOrderDetails()
+    {
+      Console.WriteLine("I am totally showing the store order history");
+      var context = createContext(_filelocation, _logStreamLocation);
     }
   }
 }

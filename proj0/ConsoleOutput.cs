@@ -38,7 +38,6 @@ namespace proj0
         {
           Console.WriteLine($"{menu[i]}");
         }
-
       }
     }
   }

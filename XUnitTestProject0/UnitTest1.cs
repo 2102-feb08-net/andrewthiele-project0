@@ -46,7 +46,7 @@ namespace XUnitTestProject0
   //   }
   // }
 
-  public class ItemTests
+  public class Item_BoughtFromInventory
   {
     [Theory]
     [InlineData(3, 5, 2)]
@@ -67,6 +67,45 @@ namespace XUnitTestProject0
       // assert
       Assert.Equal(remainingInInventory, remaining);
 
+    }
+  }
+
+  public class Item_CanNotBeBoughtFromInventory
+  {
+    [Theory]
+    [InlineData(int.MaxValue, 0)]
+    [InlineData(int.MaxValue, int.MinValue)]
+
+
+    public void CanBePurchasedWhenBuying_BoughtHigherThanAvailable_ReturnFalse(int bought, int available)
+    {
+      // arrange
+      var item = new Item(available);
+      // act
+      bool result = item.CanBePurchasedWhenBuying(bought);
+      // assert
+      Assert.False(result, $"{bought} can be bought from {available}");
+    }
+  }
+
+  public class Item_CanBeBoughtFromInventory
+  {
+    [Theory]
+    [InlineData(0, int.MaxValue)]
+    [InlineData(int.MaxValue, int.MaxValue)]
+    [InlineData(int.MinValue, int.MaxValue)]
+    [InlineData(int.MinValue, int.MinValue)]
+    [InlineData(0, 0)]
+
+
+    public void CanBePurchasedWhenBuying_BoughtLowerThanAvailable_ReturnTrue(int bought, int available)
+    {
+      // arrange
+      var item = new Item(available);
+      // act
+      bool result = item.CanBePurchasedWhenBuying(bought);
+      // assert
+      Assert.True(result, $"{bought} can not be bought from {available}");
     }
   }
 }

@@ -22,6 +22,23 @@ namespace proj0
       return number;
     }
 
+    public int getIntegerBetweenExcludeMax(int min, int max)
+    {
+      bool isNotBetween = true;
+      int integerInRange = max;
+      while (isNotBetween)
+      {
+        integerInRange = ReturnInteger();
+        if (integerInRange >= min && integerInRange < max)
+        {
+          isNotBetween = false;
+        }
+      }
+
+      return integerInRange;
+    }
+
+
     public int ChooseFrom(string[] menu)
     {
       for (int i = 0; i < menu.Length; ++i)

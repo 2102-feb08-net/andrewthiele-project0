@@ -1,14 +1,16 @@
 ﻿using System;
 namespace proj0
 {
-    interface IKeyboardInput
-    {
-        int RespondToPrompt(String message);
+  interface IKeyboardInput
+  {
+    int RespondToPrompt(String message);
 
-        int ReturnInteger();
+    int ReturnInteger();
 
-        int ChooseFrom(String[] menu);
-      
-    }
+    int getIntegerBetweenExcludeMax(int min, int max);
+
+    int ChooseFrom(String[] menu);
+
+  }
 
 }

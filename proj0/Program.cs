@@ -32,7 +32,7 @@ namespace proj0
       //DisplayItems(context);
 
       // ! EXPERIMENTAL CODE //
-      Console.WriteLine("THERE IS NO DISPLAYING ITEMS");
+      // Console.WriteLine("THERE IS NO DISPLAYING ITEMS");
       var storeLocation = new StoreApplication(filelocation, logStreamLocation);
       storeLocation.Start();
 

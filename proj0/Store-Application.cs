@@ -291,6 +291,7 @@ namespace proj0
     /// Orders are stored as Invoices in the database
     /// Orders in the database are line items in the invoice
     /// This probably implemented correctly
+    /// Stores and customers must be searched via primary key
     /// </remarks>
     private void DisplayInvoiceDetails()
     {
@@ -302,7 +303,8 @@ namespace proj0
       try
       {
         var result = context.Invoices
-              .Where(i => i.InvoiceId == invoiceNumber).SingleOrDefault();
+              .Where(i => i.InvoiceId == invoiceNumber)
+              .SingleOrDefault();
         if (result.InvoiceId == invoiceNumber)
         {
           var invoiceDetails = context.Orders
@@ -340,40 +342,96 @@ namespace proj0
       var context = createContext(_filelocation, _logStreamLocation);
       // Console.WriteLine("Context Created");
 
-      String locationCode = ci.StringResponceToPrompt("Enter location code: ");
-
-      try
-      {
-        var location = context.Locations
-              .Where(l => l.Nickname == locationCode).SingleOrDefault();
-        if (location.Nickname.Equals(locationCode))
-        {
-          String customerFirstName = ci.StringResponceToPrompt("Enter customer first name");
-          String customerLastName = ci.StringResponceToPrompt("Enter customer last name");
-          try
-          {
-            var customer = context.Customers
-            .Where(c => c.FirstName == customerFirstName && c.LastName == customerLastName)
-            .Select(c => c);
-
-
-
-
-
-
-          }
-          catch (NullReferenceException)
-          {
-            co.Print2Screen("No Customer found");
-            co.Print2Screen("Canceling order");
-          }
-        }
-      }
-
-      catch (NullReferenceException)
+      // String locationCode = ci.StringResponceToPrompt("Enter location code: ");
+      int locationId = ci.RespondToPrompt("Enter Store id: ");
+      var location = context.Locations.Find(locationId);
+      if (location == null)
       {
         co.Print2Screen("No Store found");
         co.Print2Screen("Canceling order");
+        return;
+      }
+
+      int CustomerId = ci.RespondToPrompt("Enter Customer id: ");
+      var customer = context.Customers.Find(CustomerId);
+      if (customer == null)
+      {
+        co.Print2Screen("Customer Not found");
+        co.Print2Screen("Canceling order");
+        return;
+      }
+
+      //String customerFirstName = ci.StringResponceToPrompt("Enter customer first name");
+      //String customerLastName = ci.StringResponceToPrompt("Enter customer last name");
+
+
+      // gets a list of products
+      var products = context.Products
+      .Select(p => p)
+      .ToList();
+      var exitClause = new StoreApp.DbAccess.Product();
+      exitClause.ProductId = context.Products.Max(p => p.ProductId) + 1;
+      exitClause.Name = "EXIT";
+      exitClause.Quantity = 0;
+      products.Add(exitClause);
+      bool isNotFinishedBuying = true;
+
+      // create invoice associated with orders - I know it is really confusing
+      var invoice = new StoreApp.DbAccess.Invoice();
+      int invoiceID = context.Invoices.Max(i => i.InvoiceId) + 1;
+      invoice.InvoiceId = invoiceID;
+      invoice.CustomerId = customer.CustomerId;
+      invoice.LocationId = location.LocationId;
+      // when finished buying add invoice to the database
+      context.Invoices.Add(invoice);
+      context.SaveChanges();
+      int numberOfItemsBought = 0;
+      while (isNotFinishedBuying)
+      {
+        co.Print2Screen("What will you buy?");
+        // this assumes that a product will never be deleted from the database // bad assumption
+        for (int i = 0; i < products.Count; ++i)
+        {
+          if (i < products.Count - 1)
+          {
+            co.Print2Screen($"{products[i].ProductId} - {products[i].Name} - Quanity Available: {products[i].Quantity}");
+          }
+          else
+          {
+            co.Print2Screen($"{products[i].ProductId} - {products[i].Name}");
+
+          }
+        }
+        int productID = ci.getIntegerBetweenExcludeMax(0, products.Count);
+        if (productID < products.Count - 1)
+        {
+          co.Print2Screen("How many ");
+          int limit = products[productID].Quantity;
+
+          // Can't buy more than there is available
+          // But what if they buy zero items or they want to cancel??
+          int ammount = ci.getIntegerBetweenExcludeMax(0, limit + 1);
+          var order = new StoreApp.DbAccess.Order();
+          order.InvoiceId = invoiceID;
+          order.OrderId = context.Orders.Max(o => o.OrderId) + 1;
+          order.ProductId = products[productID].ProductId;
+          // where do I put the amount?? need to add amount to order
+          context.Orders.Add(order);
+          context.SaveChanges();
+          ++numberOfItemsBought;
+
+        }
+        else
+        {
+          isNotFinishedBuying = false;
+        }
+      }
+
+      // since it is possible to add an invoice without buying anything it should be removed from the database
+      if (numberOfItemsBought == 0)
+      {
+        var invoice2Remove = context.Invoices.Find(invoiceID);
+        context.Invoices.Remove(invoice2Remove);
       }
 
     }

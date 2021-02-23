@@ -23,7 +23,7 @@ namespace XUnitTestProject0
     }
   }
 
-  // public class UnitTest2
+  // public class InputValidationTests
   // {
   //   const int MIN = 0;
   //   const int MAX = 5;
@@ -45,4 +45,28 @@ namespace XUnitTestProject0
   //     Assert.True(returnedInteger == value, $"{returnedInteger} and {value} should be equal");
   //   }
   // }
+
+  public class ItemTests
+  {
+    [Theory]
+    [InlineData(3, 5, 2)]
+    [InlineData(12, 1, 1)]
+    [InlineData(12, 0, 0)]
+    [InlineData(0, 0, 0)]
+    [InlineData(-1, 0, 0)]
+    [InlineData(-1, 1, 1)]
+
+
+    public void BoughtFromInventory_ValuesLessThanInInventory_ReturnTrue(int bought, int available, int remaining)
+    {
+      // arrange
+      var item = new Item("", available);
+
+      // act
+      int remainingInInventory = item.BoughtFromInventory(bought);
+      // assert
+      Assert.Equal(remainingInInventory, remaining);
+
+    }
+  }
 }

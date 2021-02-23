@@ -82,7 +82,7 @@ namespace proj0
         switch (ci.ChooseFrom(storeAppOperations))
         {
           case (int)storeAppChoices.PlaceOrder:
-            Console.WriteLine("Order placed");
+            Console.WriteLine("Place order");
             makeOrder();
             break;
           case (int)storeAppChoices.AddCusomer:
@@ -357,10 +357,15 @@ namespace proj0
             .Select(c => c);
 
 
+
+
+
+
           }
           catch (NullReferenceException)
           {
             co.Print2Screen("No Customer found");
+            co.Print2Screen("Canceling order");
           }
         }
       }
@@ -368,8 +373,11 @@ namespace proj0
       catch (NullReferenceException)
       {
         co.Print2Screen("No Store found");
+        co.Print2Screen("Canceling order");
       }
 
     }
+
+
   }
 }

@@ -2,14 +2,14 @@
 
 namespace proj0
 {
-    public class Product
+  public class Product
   {
-    private String name;
-    private float price;
+    private String _name;
+    private float _price;
     public Product(String name, float price)
     {
-      this.name = name;
-      this.price = price;
+      this._name = name;
+      this._price = price;
     }
 
   }

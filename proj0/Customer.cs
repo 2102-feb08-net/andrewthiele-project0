@@ -16,8 +16,8 @@ namespace proj0
     public Customer()
     {
 
-      this._fname = "John";
-      this._lname = "Doe";
+      this._fname = "DEFAULT";
+      this._lname = "CUSTOMER";
     }
 
     public Customer(String fname, String lname)
@@ -36,6 +36,11 @@ namespace proj0
     {
       get => this._lname;
       set => _lname = value;
+    }
+
+    public String FullName
+    {
+      get => this._fname + this._lname;
     }
 
     public bool IsPrime(int candidate)

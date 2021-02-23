@@ -417,6 +417,7 @@ namespace proj0
           order.ProductId = products[productID].ProductId;
           // where do I put the amount?? need to add amount to order
           context.Orders.Add(order);
+          var currentProductAmount = context.Products.Find(products[productID]);
           context.SaveChanges();
           ++numberOfItemsBought;
 
@@ -435,7 +436,5 @@ namespace proj0
       }
 
     }
-
-
   }
 }

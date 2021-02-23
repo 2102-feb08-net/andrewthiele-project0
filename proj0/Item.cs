@@ -5,7 +5,7 @@ namespace proj0
   public class Item
   {
     private String itemName;
-    private int quantity;
+    // private int quantity;
     public Item() { }
 
     public String ItemName

@@ -7,11 +7,11 @@ namespace proj0
   /// </summary>
   public class Customer
   {
-    private int _customerId;
+    // private int _customerId;
     private String _fname;
     private String _lname;
 
-    private double _balance;
+    // private double _balance;
 
     public Customer()
     {

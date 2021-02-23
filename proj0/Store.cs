@@ -10,7 +10,7 @@ namespace proj0
 
     private String _storeID;
     private Dictionary<String, Item> inventory;
-    private Dictionary<DateTime, Order> _storeOrderHistory;
+    // private Dictionary<DateTime, Order> _storeOrderHistory;
 
     public Store(String id)
     {

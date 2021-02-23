@@ -181,7 +181,9 @@ namespace proj0
       }
 
     }
-
+    /// <summary>
+    /// Shows the order history of a customer
+    /// </summary>
     private void DisplayCustomerOrderHistory()
     {
       Console.WriteLine("I am totally showing the customer order history");
@@ -231,6 +233,10 @@ namespace proj0
         Console.WriteLine("No Customer found");
       }
     }
+    /// <summary>
+    /// Displays the order history of a store
+    /// </summary>
+    /// 
     private void DisplayStoreOrderHistory()
     {
       Console.WriteLine("I am totally showing the store order history");
@@ -278,7 +284,14 @@ namespace proj0
       }
 
     }
-
+    /// <summary>
+    /// Displays the details of a customer order
+    /// </summary>
+    /// <remarks>
+    /// Orders are stored as Invoices in the database
+    /// Orders in the database are line items in the invoice
+    /// This probably implemented correctly
+    /// </remarks>
     private void DisplayInvoiceDetails()
     {
       Console.WriteLine("I am totally showing the order details");

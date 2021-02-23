@@ -127,7 +127,6 @@ namespace proj0
     /// Adds customer to database
     /// </summary>
     /// <remarks>
-    /// Allows for duplicate customers to be added needs to be fixed
     /// </remarks>
     private void AddCustomer()
     {
@@ -138,13 +137,13 @@ namespace proj0
 
       // check if customer already exists
       // else add customer to database
-      try
-      {
-        var customerAlreadyInDatabae = context.Customers.Select(c => c.FirstName == fname && c.LastName == lname);
-      }
-      catch
+
+      var customerAlreadyInDatabae = context.Customers.Select(c => c.FirstName == fname && c.LastName == lname);
+
+      if (customerAlreadyInDatabae.Count(c => c) > 0)
       {
         co.Print2Screen("Customer already in database");
+        return;
       }
 
 
@@ -372,10 +371,6 @@ namespace proj0
         co.Print2Screen("Canceling order");
         return;
       }
-
-      //String customerFirstName = ci.StringResponceToPrompt("Enter customer first name");
-      //String customerLastName = ci.StringResponceToPrompt("Enter customer last name");
-
 
       // gets a list of products
       var products = context.Products

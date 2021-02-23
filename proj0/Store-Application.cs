@@ -71,6 +71,9 @@ namespace proj0
     /// <summary>
     /// Starts Store Application
     /// </summary>
+    /// <remarks>
+    /// Can add customer
+    /// </remarks>
     public void Start()
     {
 
@@ -134,7 +137,16 @@ namespace proj0
       var context = createContext(_filelocation, _logStreamLocation);
 
       // check if customer already exists
-      // else add customer to database 
+      // else add customer to database
+      try
+      {
+        var customerAlreadyInDatabae = context.Customers.Select(c => c.FirstName == fname && c.LastName == lname);
+      }
+      catch
+      {
+        co.Print2Screen("Customer already in database");
+      }
+
 
       int max_id = context.Customers.Max(c => c.CustomerId);
       // Console.WriteLine("Context created");
@@ -417,7 +429,13 @@ namespace proj0
           order.ProductId = products[productID].ProductId;
           // where do I put the amount?? need to add amount to order
           context.Orders.Add(order);
-          var currentProductAmount = context.Products.Find(products[productID]);
+          var productAmount2Change = context.Products.Find(products[productID].ProductId);
+          var updatedProduct = new StoreApp.DbAccess.Product();
+          updatedProduct.Name = products[productID].Name;
+          updatedProduct.Price = products[productID].Price;
+          updatedProduct.ProductId = products[productID].ProductId;
+          updatedProduct.Quantity = products[productID].Quantity - ammount;
+          context.Entry(productAmount2Change).CurrentValues.SetValues(updatedProduct);
           context.SaveChanges();
           ++numberOfItemsBought;
 

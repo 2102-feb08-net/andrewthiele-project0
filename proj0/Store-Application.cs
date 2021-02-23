@@ -83,7 +83,7 @@ namespace proj0
         {
           case (int)storeAppChoices.PlaceOrder:
             Console.WriteLine("Order placed");
-            // placeorder
+            makeOrder();
             break;
           case (int)storeAppChoices.AddCusomer:
             Console.WriteLine("Add Customer");
@@ -331,6 +331,45 @@ namespace proj0
       {
         Console.WriteLine("Order not found");
       }
+    }
+
+    private void makeOrder()
+    {
+      Console.WriteLine("I am totally making an order");
+
+      var context = createContext(_filelocation, _logStreamLocation);
+      // Console.WriteLine("Context Created");
+
+      String locationCode = ci.StringResponceToPrompt("Enter location code: ");
+
+      try
+      {
+        var location = context.Locations
+              .Where(l => l.Nickname == locationCode).SingleOrDefault();
+        if (location.Nickname.Equals(locationCode))
+        {
+          String customerFirstName = ci.StringResponceToPrompt("Enter customer first name");
+          String customerLastName = ci.StringResponceToPrompt("Enter customer last name");
+          try
+          {
+            var customer = context.Customers
+            .Where(c => c.FirstName == customerFirstName && c.LastName == customerLastName)
+            .Select(c => c);
+
+
+          }
+          catch (NullReferenceException)
+          {
+            co.Print2Screen("No Customer found");
+          }
+        }
+      }
+
+      catch (NullReferenceException)
+      {
+        co.Print2Screen("No Store found");
+      }
+
     }
   }
 }

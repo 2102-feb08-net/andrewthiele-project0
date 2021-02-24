@@ -11,6 +11,8 @@ namespace proj0
 
     int ChooseFrom(String[] menu);
 
+    bool isIntegerBetweenExcludeMax(int min, int max, int integer);
+
   }
 
 }

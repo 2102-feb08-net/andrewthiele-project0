@@ -37,6 +37,11 @@ namespace proj0
 
       return integerInRange;
     }
+    public bool isIntegerBetweenExcludeMax(int min, int max, int integer)
+    {
+      return integer >= min && integer < max ? true : false;
+    }
+
 
 
     public int ChooseFrom(string[] menu)

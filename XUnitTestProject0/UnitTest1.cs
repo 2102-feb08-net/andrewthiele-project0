@@ -23,29 +23,6 @@ namespace XUnitTestProject0
     }
   }
 
-  // public class InputValidationTests
-  // {
-  //   const int MIN = 0;
-  //   const int MAX = 5;
-  //   [Theory]
-  //   [InlineData(0, MIN, MAX)]
-  //   [InlineData(1, MIN, MAX)]
-  //   [InlineData(2, MIN, MAX)]
-  //   [InlineData(3, MIN, MAX)]
-  //   [InlineData(4, MIN, MAX)]
-
-  //   public void GetIntegerBetweenExcludeMax_IsBetweenMin0AndMax5_ReturnTrue(int value, int min, int max)
-  //   {
-  //     // arrange
-  //     var ci = new ConsoleInput();
-  //     // act
-  //     int returnedInteger = ci.getIntegerBetweenExcludeMax(min, max);
-
-  //     // assert
-  //     Assert.True(returnedInteger == value, $"{returnedInteger} and {value} should be equal");
-  //   }
-  // }
-
   public class Item_BoughtFromInventory
   {
     [Theory]
@@ -106,6 +83,43 @@ namespace XUnitTestProject0
       bool result = item.CanBePurchasedWhenBuying(bought);
       // assert
       Assert.True(result, $"{bought} can not be bought from {available}");
+    }
+  }
+  public class ConsoleInput_IntegerIsNotBetweenExcludeMax
+  {
+    [Theory]
+    [InlineData(int.MaxValue, int.MaxValue, int.MaxValue)]
+    [InlineData(int.MinValue, int.MinValue, int.MinValue)]
+    [InlineData(int.MinValue, int.MaxValue, int.MaxValue)]
+    [InlineData(int.MaxValue, int.MinValue, int.MinValue)]
+    [InlineData(int.MaxValue, int.MinValue + 1, int.MinValue)]
+    [InlineData(int.MaxValue, int.MaxValue, int.MaxValue - 1)]
+
+
+    public void isIntegerBetweenExcludeMax_InputOutOfBounds_ReturnFalse(int min, int max, int test)
+    {
+      // arrange
+      var ci = new ConsoleInput();
+      // act
+      bool result = ci.isIntegerBetweenExcludeMax(min, max, test);
+      // assert
+      Assert.False(result, $"{test} is >= {min} and < {max}");
+    }
+  }
+  public class ConsoleInput_IntegerIsBetweenExcludeMax
+  {
+    [Theory]
+    [InlineData(int.MinValue, int.MinValue + 1, int.MinValue)]
+    [InlineData(int.MinValue, int.MaxValue, int.MaxValue - 1)]
+
+    public void isIntegerBetweenExcludeMax_InputOutOfBounds_ReturnFalse(int min, int max, int test)
+    {
+      // arrange
+      var ci = new ConsoleInput();
+      // act
+      bool result = ci.isIntegerBetweenExcludeMax(min, max, test);
+      // assert
+      Assert.True(result, $"{test} is NOT >= {min} and < {max}");
     }
   }
 }

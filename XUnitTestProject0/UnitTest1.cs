@@ -4,25 +4,6 @@ using proj0;
 
 namespace XUnitTestProject0
 {
-  public class UnitTest1
-  {
-    [Theory]
-    [InlineData(-1)]
-    [InlineData(0)]
-    [InlineData(1)]
-    //[InlineData(2)]
-    public void IsPrime_ValuesLessThan2_ReturnFalse(int value)
-    {
-      // arange 
-      // act
-      // assert
-      var customer = new Customer("Larry", "Jones");
-      bool result = customer.IsPrime(value);
-
-      Assert.False(result, $"{value} should not be prime");
-    }
-  }
-
   public class Item_BoughtFromInventory
   {
     [Theory]
@@ -32,7 +13,6 @@ namespace XUnitTestProject0
     [InlineData(0, 0, 0)]
     [InlineData(-1, 0, 0)]
     [InlineData(-1, 1, 1)]
-
 
     public void BoughtFromInventory_ValuesLessThanInInventory_ReturnTrue(int bought, int available, int remaining)
     {
